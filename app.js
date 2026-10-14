@@ -5,7 +5,7 @@ const dotenv = require('dotenv').config();
 const nodemailer = require('nodemailer');
 
 let transporter = nodemailer.createTransport({
-    host: "gmail",
+    host: process.env.EMAIL_USER,
     port: 465,
     secure: true,
     auth: {
@@ -23,8 +23,13 @@ const emailOptions = {
     
 }
 
-
-
+transporter.sendMail(emailOptions, (error, info) => {
+    if(error){
+        console.log(error);
+    } else {
+        console.log("Email enviado com sucesso!");
+    }
+});
 
 //indicação de pasta de aruivos estáticos - css, js, img 
 app.use(express.static("./app/public"));
